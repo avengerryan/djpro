@@ -10,10 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+from pathlib import Path
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -27,8 +29,11 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&
 # DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = []
 
+# ALLOWED_HOSTS = []
+# For deploying find the respective code for aws, azure, like below
+ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
+# ALLOWED_HOSTS = ['*', '127.0.0.1']
 
 # Application definition
 
@@ -39,11 +44,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # This below object was created for us in /catalog/apps.py
     'catalog',
 ]
 
+# For deploying the project/app on Heroku, and supplying static files we will
+# be using whitenoise
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -82,7 +92,7 @@ DATABASES = {
         'NAME': 'mozidjangolocallibrary',
         'USER': 'root',
         'PASSWORD': 'raww',
-        'HOST': '',
+        'HOST': 'localhost',
         'PORT': 3306,
     }
 }
@@ -128,12 +138,36 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = '/static/'
-
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
 
+# add to test email:
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# Heroku: Update database configuration from $DATABASE_URL
+import dj_database_url
+
+db_from_env = dj_database_url.config(conn_max_age = 500)
+DATABASES['default'].update(db_from_env)
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.2/howto/static-files/
+
+# the absolute path to the directory where collectstatic will collect static files
+# for deployment.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# os.path.join(BASE_DIR, 'staticfiles')
+
+
+# the url to use when refering to static files (where they will be served from)
+STATIC_URL = '/static/'
+
+
+# static file serving
+# http://whitenoise.evans.io/en/stable/django.html#django-middleware
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+

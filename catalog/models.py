@@ -39,11 +39,15 @@ class Book(models.Model):
     # ManyToManyField used because genre can contain many books. Books can cover many genres.
     # Genre class has already been defined so we can specify the object above.
     genre = models.ManyToManyField('Genre', help_text='Select a genre for this book')
+    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        ordering = ['title', 'author']
 
 
     def display_genre(self):
         """Create a string for the Genre. This is required to display genre in Admin."""
-        return ', '.join(genre.name for genre in self.genre.all()[:3])
+        return ', '.join([genre.name for genre in self.genre.all()[:3]])
 
     display_genre.short_description = 'Genre'
 
@@ -66,6 +70,13 @@ class BookInstance(models.Model):
     due_back = models.DateField(null=True, blank=True)
     borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
+
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+        return False
+
     LOAN_STATUS = (
         ('m', 'Maintenance'),
         ('o', 'On loan'),
@@ -81,12 +92,6 @@ class BookInstance(models.Model):
         help_text='Book availability',
     )
 
-    @property
-    def is_overdue(self):
-        if self.due_back and date.today() > self.due_back:
-            return True
-        return False
-
 
     class Meta:
         ordering = ['due_back']
@@ -94,8 +99,8 @@ class BookInstance(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.id} ({self.book.title})'
-
+        # return f'{self.id} ({self.book.title})'
+        return '{0} ({1})'.format(self.id, self.book.title)
 
 
 class Author(models.Model):
@@ -114,7 +119,10 @@ class Author(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.last_name}, {self.first_name}'
+        # return f'{self.last_name}, {self.first_name}'
+        return '{0}, {1}'.format(self.last_name, self.first_name)
+
+
 
 
 
