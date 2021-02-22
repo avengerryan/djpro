@@ -86,16 +86,25 @@ WSGI_APPLICATION = 'locallibrary.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mozidjangolocallibrary',
-        'USER': 'root',
-        'PASSWORD': 'raww',
-        'HOST': 'localhost',
-        'PORT': 3306,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'rawsdatabase',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'mozidjangolocallibrary',
+#         'USER': 'root',
+#         'PASSWORD': 'raww',
+#         'HOST': 'localhost',
+#         'PORT': 3306,
+#     }
+# }
 
 # My Notes:
     # HOST = '127.0.0.1' ip address instead of local host
