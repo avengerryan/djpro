@@ -86,14 +86,26 @@ WSGI_APPLICATION = 'locallibrary.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# 'default': {
+#     'ENGINE': 'django.db.backends.mysql',
+#     'NAME': 'mozidjangolocallibrary',
+#     'USER': 'root',
+#     'PASSWORD': 'raww',
+#     'HOST': 'localhost',
+#     'PORT': 3306,
+# }
+
+
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mozidjangolocallibrary',
         'USER': 'root',
         'PASSWORD': 'raww',
         'HOST': 'localhost',
-        'PORT': 3306,
+        'PORT': 5432,
     }
 }
 
@@ -146,10 +158,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # Heroku: Update database configuration from $DATABASE_URL
-import dj_database_url
-
-db_from_env = dj_database_url.config(conn_max_age = 500)
-DATABASES['default'].update(db_from_env)
+# import dj_database_url
+#
+# db_from_env = dj_database_url.config(conn_max_age = 500)
+# DATABASES['default'].update(db_from_env)
 
 
 # Static files (CSS, JavaScript, Images)
