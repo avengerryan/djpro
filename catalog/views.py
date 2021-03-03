@@ -176,10 +176,10 @@ class BookCreate(PermissionRequiredMixin, CreateView):
 
 
 
-class BookCreate(PermissionRequiredMixin, CreateView):
-    model = Book
-    fields = ['title', 'author', 'summary', 'isbn', 'genre', 'language']
-    permission_required = 'catalog.can_mark_returned'
+# class BookCreate(PermissionRequiredMixin, CreateView):
+#     model = Book
+#     fields = ['title', 'author', 'summary', 'isbn', 'genre', 'language']
+#     permission_required = 'catalog.can_mark_returned'
 
 
 class BookUpdate(PermissionRequiredMixin, UpdateView):

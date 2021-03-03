@@ -32,7 +32,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 # ALLOWED_HOSTS = []
 # For deploying find the respective code for aws, azure, like below
-ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = []
 # ALLOWED_HOSTS = ['*', '127.0.0.1']
 
 # Application definition
@@ -86,28 +86,29 @@ WSGI_APPLICATION = 'locallibrary.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# 'default': {
-#     'ENGINE': 'django.db.backends.mysql',
-#     'NAME': 'mozidjangolocallibrary',
-#     'USER': 'root',
-#     'PASSWORD': 'raww',
-#     'HOST': 'localhost',
-#     'PORT': 3306,
-# }
-
-
-
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mozidjangolocallibrary',
-        'USER': 'root',
-        'PASSWORD': 'raww',
-        'HOST': '',
-        'PORT': 5432,
-    }
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'jangolocallibrary',
+            'USER': 'root',
+            'PASSWORD': 'mysql@123',
+            'HOST': 'localhost',
+            'PORT': 3306,
+        }
 }
+
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'mozidjangolocallibrary',
+#         'USER': 'root',
+#         'PASSWORD': 'raww',
+#         'HOST': '',
+#         'PORT': 5432,
+#     }
+# }
 
 # My Notes:
     # HOST = '127.0.0.1' ip address instead of local host
@@ -158,10 +159,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # Heroku: Update database configuration from $DATABASE_URL
-import dj_database_url
-
-db_from_env = dj_database_url.config(conn_max_age = 500)
-DATABASES['default'].update(db_from_env)
+# import dj_database_url
+#
+# db_from_env = dj_database_url.config(conn_max_age = 500)
+# DATABASES['default'].update(db_from_env)
 
 
 # Static files (CSS, JavaScript, Images)
