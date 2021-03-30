@@ -88,12 +88,12 @@ WSGI_APPLICATION = 'locallibrary.wsgi.application'
 
 DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'jangolocallibrary',
-            'USER': 'root',
-            'PASSWORD': 'mysql@123',
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'jangolocaldb',
+            'USER': 'postgres',
+            'PASSWORD': 'root',
             'HOST': 'localhost',
-            'PORT': 3306,
+            'PORT': 5432,
         }
 }
 
